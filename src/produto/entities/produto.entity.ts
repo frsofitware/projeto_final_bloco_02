@@ -11,17 +11,20 @@ import {
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { NumericTransformer } from '../../util/numerictransformer';
 import { Categoria } from '../../categoria/entities/categoria.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 
 @Entity({ name: 'tb_produtos' })
 export class Produto {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @Transform(({ value }: TransformFnParams) => (value as string)?.trim())
   @IsNotEmpty({ message: 'O Nome é Obrigatório' })
   @Length(3, 255, { message: 'O Nome deve ter entre 3 e 255 caracteres' })
   @Column({ length: 255, nullable: false })
+  @ApiProperty()
   nome: string;
 
   @Transform(({ value }: TransformFnParams) => (value as string)?.trim())
@@ -30,6 +33,7 @@ export class Produto {
     message: 'O Nome da Marca do Produto precisa ter entre 2 e 100 caracteres',
   })
   @Column({ length: 100, nullable: false })
+  @ApiProperty()
   marca: string;
 
   @IsNumber({ maxDecimalPlaces: 2 },
@@ -48,6 +52,7 @@ export class Produto {
   @IsInt({ message: 'O Estoque deve ser um Número Inteiro' })
   @Min(0, { message: 'O Estoque não pode ser Negativo' })
   @Column({ type: 'int', nullable: false })
+  @ApiProperty()
   estoque: number;
 
   @IsOptional()
@@ -56,8 +61,10 @@ export class Produto {
     message: 'O Link da Foto do Produto deve ter entre 3 a 1000 caracteres',
   })
   @Column({ length: 1000, nullable: true })
+  @ApiProperty()
   foto: string;
 
+  @ApiProperty({ type: () => Categoria })
   @ManyToOne(() => Categoria, (categoria: Categoria) => categoria.produto)
   categoria: Categoria;
 

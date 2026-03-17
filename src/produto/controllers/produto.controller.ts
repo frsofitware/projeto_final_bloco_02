@@ -10,9 +10,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { Produto } from '../entities/produto.entity';
+import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Produto')
+@UseGuards(JwtAuthGuard)
 @Controller('/produtos')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
