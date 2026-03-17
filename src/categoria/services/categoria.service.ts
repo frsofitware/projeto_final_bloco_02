@@ -11,13 +11,19 @@ export class CategoriaService {
   ) {}
 
   async findAll(): Promise<Categoria[]> {
-    return this.categoriaRepository.find({});
+    return this.categoriaRepository.find({
+        relations: {
+        produto: true,
+      }});
   }
 
   async findById(id: number): Promise<Categoria> {
     const categoria = await this.categoriaRepository.findOne({
 
-        where: { id }
+        where: { id },
+        relations: {
+        produto: true,
+      },
     });
 
     if (!categoria) {
@@ -34,6 +40,8 @@ export class CategoriaService {
     const categorias = await this.categoriaRepository.find({
       where: {
         descricao: ILike(`%${descricao}%`),
+      }, relations: {
+        produto: true,
       },
     });
 
@@ -54,7 +62,7 @@ export class CategoriaService {
   async update(categoria: Categoria): Promise<Categoria> {
     if (!categoria.id || categoria.id <= 0) {
       throw new HttpException(
-        'O ID da Categoria deve ser válido',
+        'O ID da Categoria deve ser Válido!',
         HttpStatus.BAD_REQUEST,
       );
     }
