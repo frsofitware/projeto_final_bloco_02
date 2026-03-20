@@ -77,4 +77,5 @@ export class CategoriaService {
 
     return this.categoriaRepository.delete(id);
   }
+  
 }

@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('Blog Pessoal')
-  .setDescription('Performance Goal - Farmacia')
+  .setTitle('Farmácia')
+  .setDescription('Performance Goal - Farmácia')
   .setContact("Sofia Sabrina","https://github.com/frsofitware","sofiasabrinasilva@email.com")
   .setVersion('1.0')
   .addBearerAuth()
